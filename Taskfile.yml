@@ -1,0 +1,80 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  BUILD_DIR: ./builds
+
+tasks:
+  default:
+    deps:
+      - dependencies
+      - cleanup
+      - build_macos
+      - build_macos_arm
+      - build_linux
+      - build_linux_arm
+      - build_linux_arm64
+      - build_linux_i386
+      - build_windows
+
+  dependencies:
+    cmds:
+      - mkdir -p "{{.BUILD_DIR}}"
+      - go mod tidy
+
+  build_macos:
+    aliases:
+      - "mac"
+    cmds:
+      - GOOS=darwin go build -o {{.BUILD_DIR}}/rdis-functionality-exporter_macos
+
+  build_macos_arm:
+    aliases:
+      - "macarm"
+      - "mac_arm"
+    cmds:
+      - GOOS=darwin GOARCH=arm64 go build -o {{.BUILD_DIR}}/rdis-functionality-exporter_macos_arm
+
+  build_linux:
+    aliases:
+      - "lin"
+      - "linux"
+    cmds:
+      - GOOS=linux go build -o {{.BUILD_DIR}}/rdis-functionality-exporter_linux
+
+  build_linux_arm:
+    aliases:
+      - "linarm"
+      - "linux_arm"
+    cmds:
+      - GOOS=linux GOARCH=arm go build -o {{.BUILD_DIR}}/rdis-functionality-exporter_macos_arm
+
+  build_linux_arm64:
+    aliases:
+      - "lin64"
+      - "linux_arm64"
+    cmds:
+      - GOOS=linux GOARCH=arm64 go build -o {{.BUILD_DIR}}/rdis-functionality-exporter_macos_arm64
+      
+  build_linux_i386:
+    aliases:
+      - "lin386"
+      - "linux_386"
+    cmds:
+      - GOOS=linux GOARCH=386 go build -o {{.BUILD_DIR}}/rdis-functionality-exporter_macos_386
+      
+  build_windows:
+    aliases:
+      - "win"
+      - "windows"
+    cmds:
+      - GOOS=windows go build -o {{.BUILD_DIR}}/rdis-functionality-exporter_windows
+
+  cleanup:
+    cmds:
+      - rm -rf {{.BUILD_DIR}}/*
+
+  list_builds:
+    cmds:
+      - ls {{.BUILD_DIR}}
