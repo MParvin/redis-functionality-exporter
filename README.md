@@ -8,4 +8,10 @@ This is a simple exporter for Redis that exports the following metrics:
 * redis_read_time (in seconds) - it uses ReadRedis() to check the read time
 * redis_delete_time  (in seconds) - it uses DeleteRedis() to check the delete time
 
-TODO: remove exits from the code
+TODO:
+- [] replace `fmt.Println` and `os.Exit` with `log.Fatal`
+- [] read configuration from environment variables and if it's not set read it from `config.yml` file
+- [] write deployment
+- [] create configmap example
+- [] write test
+- [] update readme
